@@ -1,0 +1,134 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* Color Scheme Variables */
+:root {
+  --bg: #ffffff;
+  --text: #222222;
+  --text-subtle: #555555;
+  --brand: #696969;
+  --link: #696969;
+  --link-hover: #000000;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #101112;
+    --text: #e7e8ea;
+    --text-subtle: #b0b4b9;
+    --brand: #fafafa;
+    --link: #c2c6cc;
+    --link-hover: #ffffff;
+  }
+}
+
+* { box-sizing: border-box; }
+/* Smooth transitions for most property changes */
+* { transition: color .3s ease, background-color .4s ease, opacity .4s ease, border-color .3s ease, transform .35s ease; }
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: var(--bg);
+  color: var(--text);
+}
+
+a { color: var(--link); text-decoration: none; }
+/* Only pseudo-element underline; remove direct text-decoration */
+.nav a:hover, .footer-links a:hover { text-decoration: none; }
+.brand { color: var(--brand); text-decoration:none; position:relative; display:inline-block; transition: color .45s cubic-bezier(.4,.0,.2,1), filter .15s ease, transform .15s ease; }
+.brand:hover { color: var(--link-hover);}
+
+.page { min-height: 100vh; display: flex; flex-direction: column; opacity:0; animation: fadeIn .8s ease .05s forwards; }
+
+.topbar {
+  display:grid;
+  grid-template-columns: auto 1fr auto; /* brand | spacer flex | nav */
+  align-items:center;
+  padding:18px 48px;
+  font-size:14px;
+  opacity:0;
+  animation: fadeInUp .8s ease .25s forwards;
+  gap:0;
+}
+.topbar .brand { grid-column:1; justify-self:start; }
+.topbar .topbar-spacer { grid-column:2; }
+.topbar .nav { grid-column:3; justify-self:end; }
+.topbar.stacked { grid-template-columns:1fr; row-gap:16px; margin-top:25px; }
+.topbar.stacked .brand { justify-self:center; }
+.topbar.stacked .nav { grid-column:1; justify-self:center; flex-wrap:wrap; }
+.brand { font-weight: 600; letter-spacing: .5px; font-size: 2.25em;}
+.brand-static { cursor: pointer; }
+.brand:hover { color: var(--link-hover); }
+
+.nav { display:flex; gap:32px; }
+.nav a { font-weight:400; position:relative; color:var(--link); }
+.nav a::after, .footer-links a::after {
+  content:"";
+  position:absolute;
+  left:0; bottom:-2px;
+  height:1px; width:100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin:left;
+  opacity:0;
+  transition: transform .35s ease, opacity .35s ease;
+}
+.nav a:hover::after, .footer-links a:hover::after { transform: scaleX(1); opacity:1; }
+
+.content { flex: 1; display: flex; justify-content: center; }
+
+.bio-block {
+  max-width: 520px;
+  padding: 40px 0 80px;
+  font-size: 14px;
+  line-height: 1.55;
+  opacity:0;
+  animation: fadeInUp .8s ease .25s forwards;
+}
+.intro-top { margin-top: 140px; font-weight: 500; }
+.intro { font-weight: 500; }
+.line-list { font-size: 13px; opacity: .85; color: var(--text-subtle); }
+.line-grid { 
+  display:grid; 
+  grid-template-columns: repeat(auto-fill,minmax(160px,1fr));
+  grid-auto-rows: auto;
+  gap: 8px 24px; 
+  margin: 20px 0 28px; 
+  width:100%;
+}
+.line-item { 
+  font-size:13px; 
+  opacity:.85; 
+  color: var(--text-subtle); 
+  line-height:1.4; 
+  display:flex; 
+  align-items:flex-start; 
+}
+@media (min-width:640px){
+  .line-grid { grid-template-columns: repeat(3,1fr); }
+}
+.footer-links a { margin-right: 28px; margin-top: 20px; font-size: 13px; font-weight: 400; position:relative; color: var(--link); }
+.footer-links a::after, .footer-links a::after {
+  content:"";
+  position:absolute;
+  left:0; bottom:-2px;
+  height:1px; width:100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin:left;
+  opacity:0;
+  transition: transform .35s ease, opacity .35s ease;
+}
+.footer-links a:hover::after, .footer-links a:hover::after { transform: scaleX(1); opacity:1; }
+
+@media (max-width: 800px) {
+  .topbar { padding: 16px 24px; }
+  .bio-block { padding: 20px 24px 60px; }
+  .intro-top { margin-top: 80px; }
+}
+
+/* Animations */
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes fadeInUp { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
